@@ -151,5 +151,32 @@ namespace thirdSemesterAPI.Controllers
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
         }
+
+        [HttpPost]
+        [Route("login")]
+        public HttpResponseMessage Login(LoginRequest login)
+        {
+            try
+            {
+                if (employeeModel.Login(login))
+                {
+                    var respone = new
+                    {
+                        login = DateTime.Now,
+
+                    };
+                    return Request.CreateResponse(HttpStatusCode.OK, respone);
+                }
+                else
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
+                }
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+
+        }
     }
 }

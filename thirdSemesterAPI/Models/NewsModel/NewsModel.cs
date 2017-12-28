@@ -24,7 +24,7 @@ namespace thirdSemesterAPI.Models.NewsModel
                     PostDate = p.PostDate.Value
                 }).ToList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -44,7 +44,7 @@ namespace thirdSemesterAPI.Models.NewsModel
                     PostDate = p.PostDate.Value
                 }).FirstOrDefault(p => p.Id == id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

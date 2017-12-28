@@ -24,9 +24,10 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                     Phone = p.Phone,
                     Email = p.Email,
                     Address = p.Address,
+                    Password = p.Password
                 }).ToList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -47,7 +48,7 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                     Address = p.Address,
                 }).FirstOrDefault(p => p.Id == id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -86,6 +87,7 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                     Phone = p.Phone,
                     Email = p.Email,
                     Address = p.Address,
+                    Password = p.Password
                 };
                 data.Employees.Add(newEmployee);
                 data.SaveChanges();
@@ -114,7 +116,7 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                 updateEmployee.Phone = (employee.Phone != null) ? employee.Phone : updateEmployee.Phone;
                 updateEmployee.Email = (employee.Email != null) ? employee.Email : updateEmployee.Email;
                 updateEmployee.Address = (employee.Address != null) ? employee.Address : updateEmployee.Address;
-
+                updateEmployee.Password = (employee.Password != null) ? employee.Password : updateEmployee.Password;
                 data.SaveChanges();
                 return true;
             }
@@ -138,6 +140,33 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                 return false;
             }
 
+        }
+        public bool Login(LoginRequest login)
+        {
+            try
+            {
+
+                List<EmployeeEntity> employees = data.Employees.Select(p => new EmployeeEntity()
+                {
+                    Id = p.Id,
+                    Email = p.Email,
+                    Password = p.Password
+                }).Where(p => p.Email.Contains(login.Email) && p.Password.Contains(login.Password)).ToList();
+                if (employees.Count != 0)
+                {
+                    //session["email"] = login.Email;
+                    //session["password"] = login.Password;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

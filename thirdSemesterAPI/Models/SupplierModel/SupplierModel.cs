@@ -24,7 +24,7 @@ namespace thirdSemesterAPI.Models.SupplierModel
                     Website = p.Website
                 }).ToList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -44,7 +44,7 @@ namespace thirdSemesterAPI.Models.SupplierModel
                     Website = p.Website
                 }).FirstOrDefault(p => p.Id == id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

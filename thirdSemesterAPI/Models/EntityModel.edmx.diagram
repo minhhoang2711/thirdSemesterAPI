@@ -30,6 +30,7 @@
         <AssociationConnector Association="ProjectAptechIIIModel.ColorDetails" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.ProductDetails" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.SupplierDetails" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProjectAptechIIIModel.sysdiagram" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

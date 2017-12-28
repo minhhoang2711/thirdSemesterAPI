@@ -29,7 +29,7 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Status = p.Status
                 }).ToList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -54,7 +54,7 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Status = p.Status
                 }).FirstOrDefault(p => p.Id == id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

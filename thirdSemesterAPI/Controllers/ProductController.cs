@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using thirdSemesterAPI.Models;
 using thirdSemesterAPI.Models.ProductModel;
@@ -20,7 +22,11 @@ namespace thirdSemesterAPI.Controllers
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, productModel.GetAllProduct());
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetAllProduct()));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return response;
+
             }
             catch
             {
@@ -37,7 +43,10 @@ namespace thirdSemesterAPI.Controllers
             {
                 if (productModel.GetProductById(id) != null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, productModel.GetProductById(id));
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetProductById(id)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
                 }
                 else
                 {
@@ -59,7 +68,11 @@ namespace thirdSemesterAPI.Controllers
                 var products = productModel.GetProductByPrice(min, max);
                 if (products.Count > 0)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, productModel.GetProductByPrice(min, max));
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetProductByPrice(min, max)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
+                    
                 }
                 else
                 {

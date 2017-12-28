@@ -22,7 +22,7 @@ namespace thirdSemesterAPI.Models.CategoryImageModel
                    
                 }).ToList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -40,7 +40,7 @@ namespace thirdSemesterAPI.Models.CategoryImageModel
                     
                 }).FirstOrDefault(p => p.Id == id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }

@@ -22,10 +22,11 @@ namespace thirdSemesterAPI.Models.CustomerModel
                     Phone = p.Phone,
                     Address = p.Address,
                     Email = p.Email,
-                    CategoryCustomerId = p.CategoryCustomerId.Value
+                    CategoryCustomerId = p.CategoryCustomerId.Value,
+                    Password = p.Password
                 }).ToList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -43,10 +44,11 @@ namespace thirdSemesterAPI.Models.CustomerModel
                     Phone = p.Phone,
                     Address = p.Address,
                     Email = p.Email,
-                    CategoryCustomerId = p.CategoryCustomerId.Value
+                    CategoryCustomerId = p.CategoryCustomerId.Value,
+                    Password = p.Password
                 }).FirstOrDefault(p => p.Id == id);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -64,7 +66,8 @@ namespace thirdSemesterAPI.Models.CustomerModel
                     Phone = p.Phone,
                     Address = p.Address,
                     Email = p.Email,
-                    CategoryCustomerId = p.CategoryCustomerId.Value
+                    CategoryCustomerId = p.CategoryCustomerId.Value, 
+                    Password = p.Password
                 }).Where(p => p.Name.Contains(name)).ToList();
             }
             catch
@@ -72,6 +75,68 @@ namespace thirdSemesterAPI.Models.CustomerModel
                 return null;
             }
         }
+
+        // Xuất ra khách hàng theo email password
+        public List<CustomerEntity> Authen(string email,string password)
+        {
+            try
+            {
+                return data.Customers.Select(p => new CustomerEntity()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Phone = p.Phone,
+                    Address = p.Address,
+                    Email = p.Email,
+                    CategoryCustomerId = p.CategoryCustomerId.Value,
+                    Password = p.Password
+                }).Where(p => p.Name.Contains(email) && p.Password.Contains(password)).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool Login(LoginRequest login)
+        {
+            var session = HttpContext.Current.Session;
+            try
+            {
+                
+                List<CustomerEntity> customers = data.Customers.Select(p => new CustomerEntity()
+                {
+                    Id = p.Id,
+                    Email = p.Email,
+                    Password = p.Password
+                }).Where(p => p.Email.Contains(login.Email) && p.Password.Contains(login.Password)).ToList();
+                if(customers.Count!= 0)
+                {
+                    //session["email"] = login.Email;
+                    //session["password"] = login.Password;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        //public bool Logout()
+        //{
+        //    var session = HttpContext.Current.Session;
+        //    if (session["email"] != null)
+        //    {
+        //        session.Remove("email");
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         public bool AddNewCustomer(CustomerEntity p)
         {
@@ -84,7 +149,8 @@ namespace thirdSemesterAPI.Models.CustomerModel
                     Phone = p.Phone,
                     Address = p.Address,
                     Email = p.Email,
-                    CategoryCustomerId = p.CategoryCustomerId
+                    CategoryCustomerId = p.CategoryCustomerId,
+                    Password = p.Password
                 };
                 data.Customers.Add(newCustomer);
                 data.SaveChanges();
@@ -133,5 +199,6 @@ namespace thirdSemesterAPI.Models.CustomerModel
             }
 
         }
+
     }
 }
