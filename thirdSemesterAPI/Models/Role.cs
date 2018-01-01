@@ -12,26 +12,18 @@ namespace thirdSemesterAPI.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class Role
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employee()
+        public Role()
         {
-            this.Orders = new HashSet<Order>();
-            this.Roles = new HashSet<Role>();
+            this.Employees = new HashSet<Employee>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public Nullable<System.DateTime> EmployDate { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public string Password { get; set; }
+        public string NameRole { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Role> Roles { get; set; }
+        public virtual ICollection<Employee> Employees { get; set; }
     }
 }

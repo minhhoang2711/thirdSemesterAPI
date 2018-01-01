@@ -307,6 +307,9 @@
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductModel\ProductModel.cs" />
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>

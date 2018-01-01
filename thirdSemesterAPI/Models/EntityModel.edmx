@@ -140,6 +140,21 @@
           <Property Name="CategoryId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameRole" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="RoleDetails">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="SupplierDetails">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -324,6 +339,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RoleDetails_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="RoleDetails" Type="Self.RoleDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleDetails">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleDetails_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="RoleDetails" Type="Self.RoleDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleDetails">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierDetails_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="SupplierDetails" Type="Self.SupplierDetails" Multiplicity="*" />
@@ -394,6 +433,8 @@
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductDetails" EntityType="Self.ProductDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleDetails" EntityType="Self.RoleDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplierDetails" EntityType="Self.SupplierDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -448,6 +489,14 @@
           <AssociationSet Name="FK_ProductDetails_Product" Association="Self.FK_ProductDetails_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="ProductDetails" EntitySet="ProductDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleDetails_Employee" Association="Self.FK_RoleDetails_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="RoleDetails" EntitySet="RoleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleDetails_Role" Association="Self.FK_RoleDetails_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleDetails" EntitySet="RoleDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_SupplierDetails_Product" Association="Self.FK_SupplierDetails_Product">
             <End Role="Product" EntitySet="Product" />
@@ -522,6 +571,7 @@
           <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Employee" FromRole="Employee" ToRole="Order" />
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Roles" Relationship="ProjectAptechIIIModel.RoleDetails" FromRole="Employee" ToRole="Role" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -828,6 +878,11 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <EntitySet Name="Roles" EntityType="ProjectAptechIIIModel.Role" />
+          <AssociationSet Name="RoleDetails" Association="ProjectAptechIIIModel.RoleDetails">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="sysdiagram">
           <Key>
@@ -850,6 +905,18 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameRole" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Employees" Relationship="ProjectAptechIIIModel.RoleDetails" FromRole="Role" ToRole="Employee" />
+        </EntityType>
+        <Association Name="RoleDetails">
+          <End Type="ProjectAptechIIIModel.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="ProjectAptechIIIModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1053,6 +1120,22 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="ProjectAptechIIIModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="ProjectAptechIIIModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="ProjectAptechIIIModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="NameRole" ColumnName="NameRole" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="RoleDetails" TypeName="ProjectAptechIIIModel.RoleDetails" StoreEntitySet="RoleDetails">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="Id" ColumnName="EmployeeId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
