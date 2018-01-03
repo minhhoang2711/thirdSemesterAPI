@@ -11,7 +11,7 @@ using thirdSemesterAPI.Models.Entity;
 
 namespace thirdSemesterAPI.Controllers
 {
-    [RoutePrefix("api/CategoryCustomer")]
+    [RoutePrefix("api/categorycustomer")]
     public class CategoryCustomerController : ApiController
     {
 
@@ -35,7 +35,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getCategoryCustomerById/{id}")]
+        [Route("getcategorycustomerbyid/{id}")]
         public HttpResponseMessage GetCategoryCustomerById(int id)
         {
             try
@@ -59,7 +59,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getCategoryCustomerbyname/{name}")]
+        [Route("getcategorycustomerbyname/{name}")]
         public HttpResponseMessage GetCategoryCustomerByName(string name)
         {
             try
@@ -84,7 +84,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpPost]
-        [Route("addCategoryCustomer")]
+        [Route("addcategorycustomer")]
         public HttpResponseMessage AddNewCategoryCustomer(CategoryCustomerEntity categoryCustomerEntity)
         {
             try
@@ -109,7 +109,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpPut]
-        [Route("updateCategoryCustomer/{id}")]
+        [Route("updatecategorycustomer/{id}")]
         public HttpResponseMessage UpdateCategoryCustomerById(int id, CategoryCustomerEntity categoryCustomer)
         {
             try

@@ -42,7 +42,10 @@ namespace thirdSemesterAPI.Controllers
             {
                 if (supplierModel.GetSupplierById(id) != null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, supplierModel.GetSupplierById(id));
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(supplierModel.GetSupplierById(id)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
                 }
                 else
                 {
@@ -64,7 +67,10 @@ namespace thirdSemesterAPI.Controllers
                 var suppliers = supplierModel.GetSupplierByName(name);
                 if (suppliers.Count > 0)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, supplierModel.GetSupplierByName(name));
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(supplierModel.GetSupplierByName(name)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
                 }
                 else
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using thirdSemesterAPI.Models;
+using thirdSemesterAPI.Models.Entity;
 
 namespace thirdSemesterAPI.Models.ProductModel
 {
@@ -27,6 +28,25 @@ namespace thirdSemesterAPI.Models.ProductModel
                     ManufactureDate = p.ManufactureDate.Value,
                     Description = p.Description,
                     Status = p.Status
+                }).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public List<ProductClientEntity> GetAllProductForClient()
+        {
+            try
+            {
+                return data.Products.Select(p => new ProductClientEntity()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price.Value,
+                    CategoryId = p.CategoryId,  
+                    Description = p.Description,
                 }).ToList();
             }
             catch (Exception)
@@ -60,6 +80,67 @@ namespace thirdSemesterAPI.Models.ProductModel
             }
         }
 
+        public List<ProductEntity> GetProductByName(string name)
+        {
+            try
+            {
+                return data.Products.Select(p => new ProductEntity()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price.Value,
+                    SupplierId = p.SupplierId,
+                    CategoryId = p.CategoryId,
+                    ImageId = p.ImageId,
+                    ColorId = p.ColorId,
+                    ManufactureDate = p.ManufactureDate.Value,
+                    Description = p.Description,
+                    Status = p.Status
+                }).Where(p => p.Name == name).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public List<ProductClientEntity> GetProductByNameForClient(string name)
+        {
+            try
+            {
+                return data.Products.Select(p => new ProductClientEntity()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price.Value,
+                    CategoryId = p.CategoryId,
+                    Description = p.Description,
+                }).Where(p => p.Name == name).ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public ProductClientEntity GetProductByIdForClient(int id)
+        {
+            try
+            {
+                return data.Products.Select(p => new ProductClientEntity()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price.Value,
+                    CategoryId = p.CategoryId,
+                    Description = p.Description
+                }).FirstOrDefault(p => p.Id == id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         // Xuất ra sản phẩm theo giá sản phẩm
         public List<ProductEntity> GetProductByPrice(double minPrice, double maxPrice)
         {
@@ -77,6 +158,25 @@ namespace thirdSemesterAPI.Models.ProductModel
                     ManufactureDate = p.ManufactureDate.Value,
                     Description = p.Description,
                     Status = p.Status
+                }).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<ProductClientEntity> GetProductByPriceForClient(double minPrice, double maxPrice)
+        {
+            try
+            {
+                return data.Products.Where(p => (minPrice <= p.Price && p.Price <= maxPrice)).Select(p => new ProductClientEntity()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price.Value,
+                    CategoryId = p.CategoryId,
+                    Description = p.Description
                 }).ToList();
             }
             catch

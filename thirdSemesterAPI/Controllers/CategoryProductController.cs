@@ -35,14 +35,17 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getCategoryProductbyid/{id}")]
+        [Route("getcategoryproductbyid/{id}")]
         public HttpResponseMessage GetCategoryProductById(int id)
         {
             try
             {
                 if (categoryProductModel.GetCategoryProductById(id) != null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, categoryProductModel.GetCategoryProductById(id));
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(categoryProductModel.GetCategoryProductById(id)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
                 }
                 else
                 {
@@ -56,7 +59,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getCategoryProductbyname/{name}")]
+        [Route("getcategoryproductbyname/{name}")]
         public HttpResponseMessage GetCategoryProductByName(string name)
         {
             try
@@ -64,7 +67,10 @@ namespace thirdSemesterAPI.Controllers
                 var categoryProducts = categoryProductModel.GetCategoryProductByName(name);
                 if (categoryProducts.Count > 0)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, categoryProductModel.GetCategoryProductByName(name));
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(categoryProductModel.GetCategoryProductByName(name)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
                 }
                 else
                 {
@@ -78,7 +84,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpPost]
-        [Route("addCategoryProduct")]
+        [Route("addcategoryproduct")]
         public HttpResponseMessage AddNewCategoryProduct(CategoryProductEntity categoryProductEntity)
         {
             try
@@ -103,7 +109,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpPut]
-        [Route("updateCategoryProduct/{id}")]
+        [Route("updatecategoryproduct/{id}")]
         public HttpResponseMessage UpdateCategoryProductById(int id, CategoryProductEntity categoryProduct)
         {
             try

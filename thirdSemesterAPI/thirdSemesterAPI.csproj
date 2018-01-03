@@ -214,14 +214,18 @@
       <DependentUpon>EntityModel.edmx</DependentUpon>
       <LastGenOutput>EntityModel.cs</LastGenOutput>
     </Content>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Confirm\SendMailAuto.cs" />
     <Compile Include="Controllers\CategoryCustomerController.cs" />
     <Compile Include="Controllers\CategoryImageController.cs" />
     <Compile Include="Controllers\CategoryProductController.cs" />
+    <Compile Include="Controllers\CategoryProductDetailController.cs" />
     <Compile Include="Controllers\ColorController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
@@ -230,6 +234,8 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
+    <Compile Include="Controllers\SendMailController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -245,6 +251,7 @@
     <Compile Include="Models\CategoryProduct.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CategoryProductDetailModel\CategoryProductDetailModel.cs" />
     <Compile Include="Models\CategoryProductModel\CategoryModel.cs" />
     <Compile Include="Models\Color.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
@@ -275,6 +282,7 @@
     </Compile>
     <Compile Include="Models\Entity\CategoryCustomerEntity.cs" />
     <Compile Include="Models\Entity\CategoryImageEntity.cs" />
+    <Compile Include="Models\Entity\CategoryProductDetailEntity.cs" />
     <Compile Include="Models\Entity\CategoryProductEntity.cs" />
     <Compile Include="Models\Entity\ColorEntity.cs" />
     <Compile Include="Models\Entity\CustomerEntity.cs" />
@@ -283,6 +291,9 @@
     <Compile Include="Models\Entity\LoginRequest.cs" />
     <Compile Include="Models\Entity\NewsEntity.cs" />
     <Compile Include="Models\Entity\OrderEntity.cs" />
+    <Compile Include="Models\Entity\ProductClientEntity.cs" />
+    <Compile Include="Models\Entity\RoleEntity.cs" />
+    <Compile Include="Models\Entity\SendMail.cs" />
     <Compile Include="Models\Entity\SupplierEntity.cs" />
     <Compile Include="Models\Image.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
@@ -310,20 +321,15 @@
     <Compile Include="Models\Role.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\RoleModel\RoleModel.cs" />
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierModel\SupplierModel.cs" />
-    <Compile Include="Models\sysdiagram.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\CheckAuthorize.cs" />
+    <Compile Include="Security\MyPrincial.cs" />
+    <Compile Include="Security\SessionPersister.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Models\EntityModel.edmx">
@@ -333,6 +339,7 @@
     <Content Include="Models\EntityModel.edmx.diagram">
       <DependentUpon>EntityModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Database\ProjectAptechIII.bak" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">

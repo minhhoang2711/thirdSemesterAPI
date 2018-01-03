@@ -17,7 +17,7 @@ namespace thirdSemesterAPI.Controllers
         private ProductModel productModel = new ProductModel();
 
         [HttpGet]
-        [Route("findall")]
+        [Route("findAll")]
         public HttpResponseMessage GetAllProduct()
         {
             try
@@ -34,9 +34,27 @@ namespace thirdSemesterAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("findAllClient")]
+        public HttpResponseMessage GetAllProductForClient()
+        {
+            try
+            {
+                var response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetAllProductForClient()));
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                return response;
+
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+        }
+
 
         [HttpGet]
-        [Route("findbyid/{id}")]
+        [Route("findById/{id}")]
         public HttpResponseMessage GetProductById(int id)
         {
             try
@@ -60,7 +78,79 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpGet]
-        [Route("findbyprice/{price}")]
+        [Route("findByName/{name}")]
+        public HttpResponseMessage GetProductByName(string name)
+        {
+            try
+            {
+                if (productModel.GetProductByName(name) != null)
+                {
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetProductByName(name)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
+                }
+                else
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpGet]
+        [Route("findByNameClient/{name}")]
+        public HttpResponseMessage GetProductByNameForClient(string name)
+        {
+            try
+            {
+                if (productModel.GetProductByNameForClient(name) != null)
+                {
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetProductByNameForClient(name)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
+                }
+                else
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpGet]
+        [Route("findByIdClient/{id}")]
+        public HttpResponseMessage GetProductByIdForClient(int id)
+        {
+            try
+            {
+                if (productModel.GetProductById(id) != null)
+                {
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetProductByIdForClient(id)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
+                }
+                else
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpGet]
+        [Route("findByPrice/{min}/{max}")]
         public HttpResponseMessage GetProductByPrice(double min, double max)
         {
             try
@@ -70,6 +160,32 @@ namespace thirdSemesterAPI.Controllers
                 {
                     var response = new HttpResponseMessage(HttpStatusCode.OK);
                     response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetProductByPrice(min, max)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
+
+                }
+                else
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpGet]
+        [Route("findByPriceClient/{min}/{max}")]
+        public HttpResponseMessage GetProductByPriceForClient(double min, double max)
+        {
+            try
+            {
+                var products = productModel.GetProductByPriceForClient(min, max);
+                if (products.Count > 0)
+                {
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetProductByPriceForClient(min, max)));
                     response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     return response;
                     
@@ -86,7 +202,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpPost]
-        [Route("addproduct")]
+        [Route("addProduct")]
         public HttpResponseMessage AddNewProduct(ProductEntity productEntity)
         {
             try

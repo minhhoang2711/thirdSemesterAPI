@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using thirdSemesterAPI.Models;
 using thirdSemesterAPI.Models.Entity;
+using thirdSemesterAPI.Security;
 
 namespace thirdSemesterAPI.Models.EmployeeModel
 {
@@ -151,7 +152,12 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                     Id = p.Id,
                     Email = p.Email,
                     Password = p.Password
+                    
                 }).Where(p => p.Email.Contains(login.Email) && p.Password.Contains(login.Password)).ToList();
+                SessionPersister.Email = employees.Select(p => new EmployeeEntity()
+                {   
+                    Email = p.Email                    
+                }).ToString();
                 if (employees.Count != 0)
                 {
                     //session["email"] = login.Email;

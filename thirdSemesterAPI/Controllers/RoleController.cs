@@ -6,25 +6,25 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using thirdSemesterAPI.Models.EmployeeModel;
 using thirdSemesterAPI.Models.Entity;
+using thirdSemesterAPI.Models.RoleModel;
 
 namespace thirdSemesterAPI.Controllers
 {
-    [RoutePrefix("api/employee")]
-    public class EmployeeController : ApiController
+    [RoutePrefix("api/role")]
+    public class RoleController : ApiController
     {
 
-        private EmployeeModel employeeModel = new EmployeeModel();
+        private RoleModel RoleModel = new RoleModel();
 
         [HttpGet]
         [Route("findall")]
-        public HttpResponseMessage GetAllEmployee()
+        public HttpResponseMessage GetAllRole()
         {
             try
             {
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
-                response.Content = new StringContent(JsonConvert.SerializeObject(employeeModel.GetAllEmployee()));
+                response.Content = new StringContent(JsonConvert.SerializeObject(RoleModel.GetAllRole()));
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 return response;
             }
@@ -35,15 +35,15 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getemployeebyid/{id}")]
-        public HttpResponseMessage GetEmployeeById(int id)
+        [Route("getrolebyid/{id}")]
+        public HttpResponseMessage GetRoleById(int id)
         {
             try
             {
-                if (employeeModel.GetEmployeeById(id) != null)
+                if (RoleModel.GetRoleById(id) != null)
                 {
                     var response = new HttpResponseMessage(HttpStatusCode.OK);
-                    response.Content = new StringContent(JsonConvert.SerializeObject(employeeModel.GetEmployeeById(id)));
+                    response.Content = new StringContent(JsonConvert.SerializeObject(RoleModel.GetRoleById(id)));
                     response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     return response;
                 }
@@ -59,16 +59,16 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpGet]
-        [Route("getemployeebyname/{name}")]
-        public HttpResponseMessage GetEmployeeByName(string name)
+        [Route("getrolebyname/{name}")]
+        public HttpResponseMessage GetRoleByName(string name)
         {
             try
             {
-                var employees = employeeModel.GetEmployeeByName(name);
-                if (employees.Count > 0)
+                var Roles = RoleModel.GetRoleByNameRole(name);
+                if (Roles.Count > 0)
                 {
                     var response = new HttpResponseMessage(HttpStatusCode.OK);
-                    response.Content = new StringContent(JsonConvert.SerializeObject(employeeModel.GetEmployeeByName(name)));
+                    response.Content = new StringContent(JsonConvert.SerializeObject(RoleModel.GetRoleByNameRole(name)));
                     response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     return response;
                 }
@@ -84,12 +84,12 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpPost]
-        [Route("addemployee")]
-        public HttpResponseMessage AddNewEmployee(EmployeeEntity employeeEntity)
+        [Route("addrole")]
+        public HttpResponseMessage AddNewRole(RoleEntity RoleEntity)
         {
             try
             {
-                if (employeeModel.AddNewEmployee(employeeEntity))
+                if (RoleModel.AddNewRole(RoleEntity))
                 {
                     var respone = new
                     {
@@ -109,12 +109,12 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpPut]
-        [Route("updateemployee/{id}")]
-        public HttpResponseMessage UpdateEmployeeById(int id, EmployeeEntity employee)
+        [Route("updaterole/{id}")]
+        public HttpResponseMessage UpdateRoleById(int id, RoleEntity Role)
         {
             try
             {
-                if (employeeModel.UpdateEmployeeById(id, employee))
+                if (RoleModel.UpdateRoleById(id, Role))
                 {
                     var respone = new
                     {
@@ -135,11 +135,11 @@ namespace thirdSemesterAPI.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public HttpResponseMessage DeleteEmployeeById(int id)
+        public HttpResponseMessage DeleteRoleById(int id)
         {
             try
             {
-                if (employeeModel.DeleteEmployeeById(id))
+                if (RoleModel.DeleteRoleById(id))
                 {
                     var respone = new
                     {
@@ -157,32 +157,5 @@ namespace thirdSemesterAPI.Controllers
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
         }
-
-        [HttpPost]
-        [Route("login")]
-        public HttpResponseMessage Login(LoginRequest login)
-        {
-            try
-            {
-                if (employeeModel.Login(login))
-                {
-                    var respone = new
-                    {
-                        login = DateTime.Now,
-
-                    };
-                    return Request.CreateResponse(HttpStatusCode.OK, respone);
-                }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
-                }
-            }
-            catch
-            {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
-            }
-
-        }
     }
-}
+    }

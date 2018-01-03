@@ -42,7 +42,10 @@ namespace thirdSemesterAPI.Controllers
             {
                 if (categoryImageModel.GetCategoryImageById(id) != null)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, categoryImageModel.GetCategoryImageById(id));
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(categoryImageModel.GetCategoryImageById(id)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
                 }
                 else
                 {
@@ -64,7 +67,10 @@ namespace thirdSemesterAPI.Controllers
                 var categoryImages = categoryImageModel.GetCategoryImageByName(name);
                 if (categoryImages.Count > 0)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, categoryImageModel.GetCategoryImageByName(name));
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(categoryImageModel.GetCategoryImageByName(name)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
                 }
                 else
                 {
