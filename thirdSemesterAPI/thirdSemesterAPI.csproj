@@ -199,10 +199,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Images\ClotherSuper.png.png" />
+    <Content Include="Content\Images\cafe.png" />
+    <Content Include="Content\Images\ClotherSuper.png" />
     <Content Include="Content\Images\Hung1.jpg" />
     <Content Include="Content\Images\Hung2.jpg" />
-    <Content Include="Content\Images\Hung4.jpg.jpg" />
+    <Content Include="Content\Images\Hung4.jpg" />
     <Content Include="Global.asax" />
     <Content Include="Models\EntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -285,6 +286,7 @@
     <Compile Include="Models\Entity\CategoryProductDetailEntity.cs" />
     <Compile Include="Models\Entity\CategoryProductEntity.cs" />
     <Compile Include="Models\Entity\ColorEntity.cs" />
+    <Compile Include="Models\Entity\CustomerClientEntity.cs" />
     <Compile Include="Models\Entity\CustomerEntity.cs" />
     <Compile Include="Models\Entity\EmployeeEntity.cs" />
     <Compile Include="Models\Entity\ImageEntity.cs" />

@@ -154,10 +154,10 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                     Password = p.Password
                     
                 }).Where(p => p.Email.Contains(login.Email) && p.Password.Contains(login.Password)).ToList();
-                SessionPersister.Email = employees.Select(p => new EmployeeEntity()
-                {   
-                    Email = p.Email                    
-                }).ToString();
+                //SessionPersister.Email = employees.Select(p => new EmployeeEntity()
+                //{   
+                //    Email = p.Email                    
+                //}).ToString();
                 if (employees.Count != 0)
                 {
                     //session["email"] = login.Email;

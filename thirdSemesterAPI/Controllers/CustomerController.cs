@@ -60,6 +60,30 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpGet]
+        [Route("getCustomerClientByid/{id}")]
+        public HttpResponseMessage GetCustomerClientById(int id)
+        {
+            try
+            {
+                if (customerModel.GetCustomerById(id) != null)
+                {
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(customerModel.GetCustomerClientById(id)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
+                }
+                else
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpGet]
         [Route("getCustomerbyname/{name}")]
         public HttpResponseMessage GetCustomerByName(string name)
         {
@@ -70,6 +94,31 @@ namespace thirdSemesterAPI.Controllers
                 {
                     var response = new HttpResponseMessage(HttpStatusCode.OK);
                     response.Content = new StringContent(JsonConvert.SerializeObject(customerModel.GetCustomerByName(name)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
+                }
+                else
+                {
+                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                }
+            }
+            catch
+            {
+                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpGet]
+        [Route("getCustomerClientByName/{name}")]
+        public HttpResponseMessage GetCustomerClientByName(string name)
+        {
+            try
+            {
+                var customers = customerModel.GetCustomerClientByName(name);
+                if (customers.Count > 0)
+                {
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(customerModel.GetCustomerClientByName(name)));
                     response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                     return response;
                 }
@@ -167,11 +216,7 @@ namespace thirdSemesterAPI.Controllers
             {
                 if (customerModel.Login(login))
                 {
-                    var respone = new
-                    {
-                        login = DateTime.Now,
-
-                    };
+                    var respone = login.Email;
                     return Request.CreateResponse(HttpStatusCode.OK, respone);
                 }
                 else

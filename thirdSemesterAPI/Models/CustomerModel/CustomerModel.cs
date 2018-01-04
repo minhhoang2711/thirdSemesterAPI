@@ -32,7 +32,7 @@ namespace thirdSemesterAPI.Models.CustomerModel
             }
         }
 
-        //Xuất ra sản phẩm theo id sản phẩm 
+        //Xuất ra khách hàng bằng id
         public CustomerEntity GetCustomerById(int id)
         {
             try
@@ -54,7 +54,28 @@ namespace thirdSemesterAPI.Models.CustomerModel
             }
         }
 
-        // Xuất ra sản phẩm theo giá sản phẩm
+        public CustomerClientEntity GetCustomerClientById(int id)
+        {
+            try
+            {
+                return data.Customers.Select(p => new CustomerClientEntity()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Phone = p.Phone,
+                    Address = p.Address,
+                    Email = p.Email,
+                    CategoryCustomerId = p.CategoryCustomerId.Value,
+                }).FirstOrDefault(p => p.Id == id);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        // Xuất ra sản phẩm theo tên
+
         public List<CustomerEntity> GetCustomerByName(string name)
         {
             try
@@ -68,6 +89,26 @@ namespace thirdSemesterAPI.Models.CustomerModel
                     Email = p.Email,
                     CategoryCustomerId = p.CategoryCustomerId.Value, 
                     Password = p.Password
+                }).Where(p => p.Name.Contains(name)).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<CustomerClientEntity> GetCustomerClientByName(string name)
+        {
+            try
+            {
+                return data.Customers.Select(p => new CustomerClientEntity()
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Phone = p.Phone,
+                    Address = p.Address,
+                    Email = p.Email,
+                    CategoryCustomerId = p.CategoryCustomerId.Value,
                 }).Where(p => p.Name.Contains(name)).ToList();
             }
             catch
@@ -100,7 +141,6 @@ namespace thirdSemesterAPI.Models.CustomerModel
 
         public bool Login(LoginRequest login)
         {
-            var session = HttpContext.Current.Session;
             try
             {
                 
