@@ -343,6 +343,7 @@
       <DependentUpon>EntityModel.edmx</DependentUpon>
     </Content>
     <Content Include="Database\ProjectAptechIII.bak" />
+    <Content Include="Database\ProjectAptech3.bak" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">

@@ -14,19 +14,10 @@ namespace thirdSemesterAPI.Models
     
     public partial class News
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public News()
-        {
-            this.ImageDetails = new HashSet<ImageDetail>();
-        }
-    
         public int Id { get; set; }
         public string Name { get; set; }
         public string ContentNews { get; set; }
         public Nullable<int> ImageId { get; set; }
         public Nullable<System.DateTime> PostDate { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ImageDetail> ImageDetails { get; set; }
     }
 }

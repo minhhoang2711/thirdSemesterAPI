@@ -16,12 +16,8 @@ namespace thirdSemesterAPI.Models
     {
         public int ImageId { get; set; }
         public int ProductId { get; set; }
-        public int NewsId { get; set; }
-        public int ImageCategoryId { get; set; }
     
-        public virtual CategoryImage CategoryImage { get; set; }
         public virtual Image Image { get; set; }
-        public virtual News News { get; set; }
         public virtual Product Product { get; set; }
     }
 }

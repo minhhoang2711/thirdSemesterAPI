@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectAptechIIIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectAptechIIIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CategoryCustomer">
           <Key>
             <PropertyRef Name="Id" />
@@ -32,8 +32,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NameByColorName" Type="varchar" MaxLength="150" />
-          <Property Name="NameByRGB" Type="varchar" MaxLength="150" />
-          <Property Name="NameByHexadecimal" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="ColorDetails">
           <Key>
@@ -48,12 +46,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="150" />
-          <Property Name="Phone" Type="varchar" MaxLength="11" />
-          <Property Name="Address" Type="varchar" MaxLength="150" />
-          <Property Name="Email" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="CategoryCustomerId" Type="int" />
-          <Property Name="Password" Type="varchar" MaxLength="150" />
+          <Property Name="Password" Type="char" MaxLength="10" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -66,7 +64,6 @@
           <Property Name="Email" Type="varchar" MaxLength="100" />
           <Property Name="Address" Type="varchar" MaxLength="100" />
           <Property Name="Password" Type="varchar" MaxLength="150" />
-          <Property Name="RoleId" Type="int" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -79,13 +76,9 @@
           <Key>
             <PropertyRef Name="ImageId" />
             <PropertyRef Name="ProductId" />
-            <PropertyRef Name="NewsId" />
-            <PropertyRef Name="ImageCategoryId" />
           </Key>
           <Property Name="ImageId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="NewsId" Type="int" Nullable="false" />
-          <Property Name="ImageCategoryId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="News">
           <Key>
@@ -148,6 +141,14 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NameRole" Type="varchar" MaxLength="150" />
         </EntityType>
+        <EntityType Name="RoleDetails">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="SupplierDetails">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -202,30 +203,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Employee_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="RoleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImageDetails_CategoryImage">
-          <End Role="CategoryImage" Type="Self.CategoryImage" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CategoryImage">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="ImageCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ImageDetails_Image">
           <End Role="Image" Type="Self.Image" Multiplicity="1" />
           <End Role="ImageDetails" Type="Self.ImageDetails" Multiplicity="*" />
@@ -235,18 +212,6 @@
             </Principal>
             <Dependent Role="ImageDetails">
               <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImageDetails_News">
-          <End Role="News" Type="Self.News" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="News">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="NewsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -334,6 +299,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_RoleDetails_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="RoleDetails" Type="Self.RoleDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleDetails">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RoleDetails_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="RoleDetails" Type="Self.RoleDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RoleDetails">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierDetails_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="SupplierDetails" Type="Self.SupplierDetails" Multiplicity="*" />
@@ -374,6 +363,7 @@
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductDetails" EntityType="Self.ProductDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleDetails" EntityType="Self.RoleDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SupplierDetails" EntityType="Self.SupplierDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ColorDetails_Color" Association="Self.FK_ColorDetails_Color">
@@ -388,20 +378,8 @@
             <End Role="CategoryCustomer" EntitySet="CategoryCustomer" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
-          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_CategoryImage" Association="Self.FK_ImageDetails_CategoryImage">
-            <End Role="CategoryImage" EntitySet="CategoryImage" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_ImageDetails_Image" Association="Self.FK_ImageDetails_Image">
             <End Role="Image" EntitySet="Image" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_News" Association="Self.FK_ImageDetails_News">
-            <End Role="News" EntitySet="News" />
             <End Role="ImageDetails" EntitySet="ImageDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_ImageDetails_Product" Association="Self.FK_ImageDetails_Product">
@@ -432,6 +410,14 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="ProductDetails" EntitySet="ProductDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_RoleDetails_Employee" Association="Self.FK_RoleDetails_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="RoleDetails" EntitySet="RoleDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RoleDetails_Role" Association="Self.FK_RoleDetails_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="RoleDetails" EntitySet="RoleDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_SupplierDetails_Product" Association="Self.FK_SupplierDetails_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="SupplierDetails" EntitySet="SupplierDetails" />
@@ -441,8 +427,7 @@
             <End Role="SupplierDetails" EntitySet="SupplierDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectAptechIIIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -460,7 +445,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ImageDetails" Relationship="Self.FK_ImageDetails_CategoryImage" FromRole="CategoryImage" ToRole="ImageDetails" />
         </EntityType>
         <EntityType Name="CategoryProduct">
           <Key>
@@ -475,9 +459,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameByColorName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="NameByRGB" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="NameByHexadecimal" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="NameByColorName" MaxLength="150" FixedLength="false" Unicode="false" Type="String" />
           <NavigationProperty Name="Products" Relationship="Self.ColorDetails" FromRole="Color" ToRole="Product" />
         </EntityType>
         <EntityType Name="Customer">
@@ -485,12 +467,12 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="Address" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CategoryCustomerId" Type="Int32" />
-          <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="10" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="CategoryCustomer" Relationship="Self.FK_Customer_CategoryCustomer" FromRole="Customer" ToRole="CategoryCustomer" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
         </EntityType>
@@ -505,9 +487,8 @@
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="RoleId" Type="Int32" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Employee" FromRole="Employee" ToRole="Order" />
+          <NavigationProperty Name="Roles" Relationship="ProjectAptechIIIModel.RoleDetails" FromRole="Employee" ToRole="Role" />
         </EntityType>
         <EntityType Name="Image">
           <Key>
@@ -521,16 +502,10 @@
           <Key>
             <PropertyRef Name="ImageId" />
             <PropertyRef Name="ProductId" />
-            <PropertyRef Name="NewsId" />
-            <PropertyRef Name="ImageCategoryId" />
           </Key>
           <Property Name="ImageId" Type="Int32" Nullable="false" />
           <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="NewsId" Type="Int32" Nullable="false" />
-          <Property Name="ImageCategoryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CategoryImage" Relationship="Self.FK_ImageDetails_CategoryImage" FromRole="ImageDetails" ToRole="CategoryImage" />
           <NavigationProperty Name="Image" Relationship="Self.FK_ImageDetails_Image" FromRole="ImageDetails" ToRole="Image" />
-          <NavigationProperty Name="News" Relationship="Self.FK_ImageDetails_News" FromRole="ImageDetails" ToRole="News" />
           <NavigationProperty Name="Product" Relationship="Self.FK_ImageDetails_Product" FromRole="ImageDetails" ToRole="Product" />
         </EntityType>
         <EntityType Name="News">
@@ -542,7 +517,6 @@
           <Property Name="ContentNews" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="ImageId" Type="Int32" />
           <Property Name="PostDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ImageDetails" Relationship="Self.FK_ImageDetails_News" FromRole="News" ToRole="ImageDetails" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -596,7 +570,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NameRole" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Role" FromRole="Role" ToRole="Employee" />
+          <NavigationProperty Name="Employees" Relationship="ProjectAptechIIIModel.RoleDetails" FromRole="Role" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -621,18 +595,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ImageDetails_CategoryImage">
-          <End Role="CategoryImage" Type="Self.CategoryImage" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CategoryImage">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="ImageCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Order_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -642,18 +604,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employee_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -678,18 +628,6 @@
             </Principal>
             <Dependent Role="ImageDetails">
               <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImageDetails_News">
-          <End Role="News" Type="Self.News" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="News">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="NewsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -760,17 +698,9 @@
             <End Role="CategoryCustomer" EntitySet="CategoryCustomers" />
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_CategoryImage" Association="Self.FK_ImageDetails_CategoryImage">
-            <End Role="CategoryImage" EntitySet="CategoryImages" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="Employee" EntitySet="Employees" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Employee" Association="Self.FK_Order_Employee">
             <End Role="Employee" EntitySet="Employees" />
@@ -778,10 +708,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_ImageDetails_Image" Association="Self.FK_ImageDetails_Image">
             <End Role="Image" EntitySet="Images" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_News" Association="Self.FK_ImageDetails_News">
-            <End Role="News" EntitySet="News" />
             <End Role="ImageDetails" EntitySet="ImageDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_ImageDetails_Product" Association="Self.FK_ImageDetails_Product">
@@ -808,7 +734,15 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Suppliers" EntitySet="Suppliers" />
           </AssociationSet>
+          <AssociationSet Name="RoleDetails" Association="ProjectAptechIIIModel.RoleDetails">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Role" EntitySet="Roles" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="RoleDetails">
+          <End Type="ProjectAptechIIIModel.Employee" Role="Employee" Multiplicity="*" />
+          <End Type="ProjectAptechIIIModel.Role" Role="Role" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -844,9 +778,7 @@
               <MappingFragment StoreEntitySet="Color">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NameByColorName" ColumnName="NameByColorName" />
-                <ScalarProperty Name="NameByRGB" ColumnName="NameByRGB" />
-                <ScalarProperty Name="NameByHexadecimal" ColumnName="NameByHexadecimal" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
@@ -872,7 +804,6 @@
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -889,9 +820,7 @@
               <MappingFragment StoreEntitySet="ImageDetails">
                 <ScalarProperty Name="ImageId" ColumnName="ImageId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="NewsId" ColumnName="NewsId" />
-                <ScalarProperty Name="ImageCategoryId" ColumnName="ImageCategoryId" />
-              </MappingFragment>
+                </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="News">
@@ -984,6 +913,14 @@
             </EndProperty>
             <EndProperty Name="Suppliers">
               <ScalarProperty Name="Id" ColumnName="SupplierId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="RoleDetails" TypeName="ProjectAptechIIIModel.RoleDetails" StoreEntitySet="RoleDetails">
+            <EndProperty Name="Role">
+              <ScalarProperty Name="Id" ColumnName="RoleId" />
+            </EndProperty>
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="Id" ColumnName="EmployeeId" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>

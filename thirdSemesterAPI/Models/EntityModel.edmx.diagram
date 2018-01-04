@@ -20,18 +20,16 @@
         <EntityTypeShape EntityType="ProjectAptechIIIModel.Role" Width="1.5" PointX="1.5" PointY="18.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectAptechIIIModel.Supplier" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
         <AssociationConnector Association="ProjectAptechIIIModel.FK_Customer_CategoryCustomer" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectAptechIIIModel.FK_ImageDetails_CategoryImage" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.FK_Order_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectAptechIIIModel.FK_Employee_Role" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.FK_Order_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.FK_ImageDetails_Image" ManuallyRouted="false" />
-        <AssociationConnector Association="ProjectAptechIIIModel.FK_ImageDetails_News" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.FK_ImageDetails_Product" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.FK_OrderDetails_Order" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.FK_OrderDetails_Product" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.ColorDetails" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.ProductDetails" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectAptechIIIModel.SupplierDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectAptechIIIModel.RoleDetails" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
