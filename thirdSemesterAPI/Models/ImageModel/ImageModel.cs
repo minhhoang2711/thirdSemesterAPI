@@ -61,7 +61,7 @@ namespace thirdSemesterAPI.Models.ImageModel
             }
         }
 
-        public bool AddNewImage(ImageEntity p)
+        public int AddNewImage(ImageEntity p)
         {
             try
             {
@@ -74,16 +74,16 @@ namespace thirdSemesterAPI.Models.ImageModel
                 data.SaveChanges();
                 if (newImage.Id != 0)
                 {
-                    return true;
+                    return newImage.Id;
                 }
                 else
                 {
-                    return false;
+                    return -1;
                 }
             }
             catch
             {
-                return false;
+                return -1;
             }
         }
 

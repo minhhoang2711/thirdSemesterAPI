@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Http;
+using thirdSemesterAPI.CustomModels;
 using thirdSemesterAPI.Models.Entity;
 using thirdSemesterAPI.Models.ImageModel;
 
@@ -84,30 +85,6 @@ namespace thirdSemesterAPI.Controllers
             }
         }
 
-        [HttpPost]
-        [Route("addImage")]
-        public HttpResponseMessage AddNewImage(ImageEntity ImageEntity)
-        {
-            try
-            {
-                if (imageModel.AddNewImage(ImageEntity))
-                {
-                    var respone = new
-                    {
-                        createdAt = DateTime.Now
-                    };
-                    return Request.CreateResponse(HttpStatusCode.OK, respone);
-                }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
-                }
-            }
-            catch
-            {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
-            }
-        }
 
         [HttpPut]
         [Route("updateimage/{id}")]
@@ -159,15 +136,18 @@ namespace thirdSemesterAPI.Controllers
             }
         }
 
+
         [HttpPost]
-        [Route("postimage")]
-        public HttpResponseMessage PostImage()
+        [Route("upload")]
+        public HttpResponseMessage UploadImage()
         {
             Dictionary<string, object> dict = new Dictionary<string, object>();
             try
             {
 
                 var httpRequest = HttpContext.Current.Request;
+                int imageId;
+                ImageResponse imageRes;
 
                 foreach (string file in httpRequest.Files)
                 {
@@ -206,15 +186,32 @@ namespace thirdSemesterAPI.Controllers
                             var filePath = HttpContext.Current.Server.MapPath("~/Content/Images/" + postedFile.FileName + extension);
 
                             postedFile.SaveAs(filePath);
-                            
+
+                            var newImage = new ImageEntity {
+                                Name = postedFile.FileName
+                            };
+                            imageId = imageModel.AddNewImage(newImage);
+                            var responseMessage = imageId == -1 ? "Inserted image failed" : "Image Updated Successfully.";
+                            imageRes = new ImageResponse
+                            {
+                                ImageId = imageId,
+                                Message = "Image Updated Successfully."
+                            };
+                            response = new HttpResponseMessage(HttpStatusCode.Created);
+                            response.Content = new StringContent(JsonConvert.SerializeObject(imageRes));
+                            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                            return response;
+
                         }
 
                     }
-
-                    var message1 = string.Format("Image Updated Successfully.");
-                    return Request.CreateErrorResponse(HttpStatusCode.Created, message1);
                 }
-                var res = string.Format("Please Upload a image.");
+
+                var res = new ImageResponse
+                {
+                    ImageId = -1,
+                    Message = "Inserted image failed"
+                };
                 dict.Add("error", res);
                 return Request.CreateResponse(HttpStatusCode.NotFound, dict);
             }

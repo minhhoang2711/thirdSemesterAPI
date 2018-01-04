@@ -238,6 +238,7 @@
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SendMailController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="CustomModels\ImageResponse.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
