@@ -86,6 +86,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
 
+
         [HttpPut]
         [Route("updateimage/{id}")]
         public HttpResponseMessage UpdateImageById(int id, ImageEntity Image)

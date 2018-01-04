@@ -40,14 +40,42 @@ namespace thirdSemesterAPI.Models.ProductModel
         {
             try
             {
-                return data.Products.Select(p => new ProductClientEntity()
+
+                var allRes = data.Products.Join(
+                       data.ImageDetails,
+                       product => product.Id,
+                       detail => detail.ProductId,
+                       (product, detail) => new { product, detail }
+                )
+                .Join(
+                    data.Images,
+                    combinedEntry => combinedEntry.detail.ImageId,
+                    image => image.Id,
+                    (combinedEntry, image) => new
+                    {
+                        Id = combinedEntry.product.Id,
+                        Name = combinedEntry.product.Name,
+                        Price = combinedEntry.product.Price,
+                        ImageUrl = "./Content/Images" + image.Name
+                    }
+                )
+                .GroupBy(fullEntry => fullEntry.Id)
+                .Select(fullEntryGroupItem => new
                 {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price.Value,
-                    CategoryId = p.CategoryId,  
-                    Description = p.Description,
-                }).ToList();
+
+                });
+                
+                
+                //return data.Products.Select(p => new ProductClientEntity()
+                //{
+                //    Id = p.Id,
+                //    Name = p.Name,
+                //    Price = p.Price.Value,
+                //    CategoryId = p.CategoryId,  
+                //    Description = p.Description,
+                //    p.ImageDetails.
+                //}).ToList();
+                return null;
             }
             catch (Exception)
             {
