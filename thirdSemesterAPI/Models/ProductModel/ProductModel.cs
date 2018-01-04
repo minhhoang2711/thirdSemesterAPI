@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using thirdSemesterAPI.CustomModels;
 using thirdSemesterAPI.Models;
 using thirdSemesterAPI.Models.Entity;
 
@@ -36,7 +37,7 @@ namespace thirdSemesterAPI.Models.ProductModel
             }
         }
 
-        public List<ProductClientEntity> GetAllProductForClient()
+        public List<ProductClientRes> GetAllProductForClient()
         {
             try
             {
@@ -56,14 +57,18 @@ namespace thirdSemesterAPI.Models.ProductModel
                         Id = combinedEntry.product.Id,
                         Name = combinedEntry.product.Name,
                         Price = combinedEntry.product.Price,
-                        ImageUrl = "./Content/Images" + image.Name
+                        ImageUrl = "./Content/Images/" + image.Name
                     }
                 )
                 .GroupBy(fullEntry => fullEntry.Id)
-                .Select(fullEntryGroupItem => new
-                {
-
-                });
+                .Select(g => new ProductClientRes{
+                    Id = g.FirstOrDefault().Id,
+                    Name = g.FirstOrDefault().Name,
+                    Price = g.FirstOrDefault().Price,
+                    ImageUrl = g.FirstOrDefault().ImageUrl,
+                })
+                .Distinct();
+                
                 
                 
                 //return data.Products.Select(p => new ProductClientEntity()
@@ -75,7 +80,7 @@ namespace thirdSemesterAPI.Models.ProductModel
                 //    Description = p.Description,
                 //    p.ImageDetails.
                 //}).ToList();
-                return null;
+                return allRes.ToList();
             }
             catch (Exception)
             {

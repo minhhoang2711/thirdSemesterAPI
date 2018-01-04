@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using thirdSemesterAPI.CustomModels;
 using thirdSemesterAPI.Models;
 using thirdSemesterAPI.Models.Entity;
 using thirdSemesterAPI.Models.ProductModel;
@@ -42,7 +43,7 @@ namespace thirdSemesterAPI.Controllers
             try
             {
                 var response = new HttpResponseMessage(HttpStatusCode.OK);
-                List<ProductClientEntity> products = productModel.GetAllProductForClient();
+                List<ProductClientRes> products = productModel.GetAllProductForClient();
                 response.Content = new StringContent(JsonConvert.SerializeObject(productModel.GetAllProductForClient()));
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
                 return response;
