@@ -16,7 +16,7 @@
         <EntityTypeShape EntityType="ProjectAptechIIIModel.News" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectAptechIIIModel.Order" Width="1.5" PointX="6" PointY="16.125" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectAptechIIIModel.OrderDetail" Width="1.5" PointX="8.25" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectAptechIIIModel.Product" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectAptechIIIModel.Product" Width="1.5" PointX="3.25" PointY="3.5" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectAptechIIIModel.Role" Width="1.5" PointX="1.5" PointY="18.375" IsExpanded="true" />
         <EntityTypeShape EntityType="ProjectAptechIIIModel.Supplier" Width="1.5" PointX="5.25" PointY="10.625" IsExpanded="true" />
         <AssociationConnector Association="ProjectAptechIIIModel.FK_Customer_CategoryCustomer" ManuallyRouted="false" />

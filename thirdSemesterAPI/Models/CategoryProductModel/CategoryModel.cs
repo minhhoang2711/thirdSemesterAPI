@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using thirdSemesterAPI.App_Start;
 using thirdSemesterAPI.Models.Entity;
 
 namespace thirdSemesterAPI.Models.CategoryModel
@@ -26,6 +27,34 @@ namespace thirdSemesterAPI.Models.CategoryModel
             {
                 return null;
             }
+        }
+
+        public List<ProductClientEntity> GetProductListByCategoryId(int id)
+        {
+            try
+            {
+                var res = data.Products.Join(
+                    data.Images,
+                    product => product.ImageId,
+                    image => image.Id,
+                    (product, image) => new
+                    ProductClientEntity{
+                        Id = product.Id,
+                        Name = product.Name,
+                        Price = product.Price.Value,
+                        ImageUrl = Custom.BASE_IMAGE_PATH + image.Name,
+                        CategoryId = product.CategoryId
+                    }
+                )
+                .Where(mergeItem => mergeItem.CategoryId == id).ToList();
+                return res;
+            } catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION WHILE GET PRODUCT LIST OF CATEGORY" + id);
+                System.Diagnostics.Debug.WriteLine(e);
+                return null;
+            }
+            
         }
 
         //Xuất ra sản phẩm theo id sản phẩm 

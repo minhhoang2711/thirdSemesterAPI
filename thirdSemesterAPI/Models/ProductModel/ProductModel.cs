@@ -10,6 +10,7 @@ namespace thirdSemesterAPI.Models.ProductModel
 {
     public class ProductModel
     {
+        private static String BASE_IMAGE_URL = "Content/Images/";
         private ProjectAptechIIIEntities2 data = new ProjectAptechIIIEntities2();
 
         // Xuất ra tất cả sản phẩm
@@ -57,7 +58,7 @@ namespace thirdSemesterAPI.Models.ProductModel
                         Id = combinedEntry.product.Id,
                         Name = combinedEntry.product.Name,
                         Price = combinedEntry.product.Price,
-                        ImageUrl = "./Content/Images/" + image.Name
+                        ImageUrl = BASE_IMAGE_URL + image.Name
                     }
                 )
                 .GroupBy(fullEntry => fullEntry.Id)
@@ -121,15 +122,8 @@ namespace thirdSemesterAPI.Models.ProductModel
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    Price = p.Price.Value,
-                    SupplierId = p.SupplierId,
-                    CategoryId = p.CategoryId,
-                    ImageId = p.ImageId,
-                    ColorId = p.ColorId,
-                    ManufactureDate = p.ManufactureDate.Value,
-                    Description = p.Description,
-                    Status = p.Status
-                }).Where(p => p.Name == name).ToList();
+  
+                }).Where(p => p.Name.Contains(name)).ToList();
             }
             catch (Exception)
             {

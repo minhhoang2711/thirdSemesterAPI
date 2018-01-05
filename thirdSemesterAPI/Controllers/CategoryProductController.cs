@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -56,6 +57,30 @@ namespace thirdSemesterAPI.Controllers
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
+        }
+
+        /** Get all product in the categories
+         */
+        [HttpGet]
+        [Route("{id}/products")]
+        public HttpResponseMessage GetCategoryProductsById(int id)
+        {
+            HttpResponseMessage res;
+            List<ProductClientEntity> list;
+            try
+            {
+                list = categoryProductModel.GetProductListByCategoryId(id);
+                
+
+            } catch (SqlException e)
+            {
+                res = new HttpResponseMessage(HttpStatusCode.InternalServerError);
+                res.Content = new StringContent(JsonConvert.SerializeObject(e));
+                return res;
+            }
+            res = new HttpResponseMessage();
+            res.Content = new StringContent(JsonConvert.SerializeObject(list));
+            return res;
         }
 
         [HttpGet]
