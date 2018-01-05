@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using thirdSemesterAPI.App_Start;
 using thirdSemesterAPI.CustomModels;
 using thirdSemesterAPI.Models;
 using thirdSemesterAPI.Models.Entity;
@@ -112,6 +114,30 @@ namespace thirdSemesterAPI.Models.ProductModel
             {
                 return null;
             }
+        }
+
+        public ProductClientEntityV2 GetProductByIdV2(int id)
+        {
+            try {
+                var targetProduct = data.Products.Select(product => new ProductClientEntityV2
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price.Value,
+                    Description = product.Description,
+                    Categories = product.CategoryProducts.Select(cat => cat.Name).ToList(),
+                    Colors = product.Colors.Select(color => color.NameByColorName).ToList(),
+                    ImageUrl= product.ImageDetails.Select(detail => Custom.BASE_IMAGE_PATH + detail.Image.Name).ToList(),
+                })
+                .Where(product => product.Id == id).First();
+                return targetProduct;
+
+            } catch (SqlException e)
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+                return null;
+            }
+            return null;
         }
 
         public List<ProductEntity> GetProductByName(string name)

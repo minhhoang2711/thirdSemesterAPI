@@ -81,6 +81,35 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpGet]
+        [Route("details/{id}")]
+        public HttpResponseMessage GetProductByIdV2(int id)
+        {
+            ProductClientEntityV2 product;
+            HttpResponseMessage res;
+            try
+            {
+                product = productModel.GetProductByIdV2(id);
+
+                if (product == null)
+                {
+                    res = new HttpResponseMessage(HttpStatusCode.NotFound);
+                    res.Content = new StringContent("NOT FOUND");
+                    res.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
+                }
+
+
+            } catch (Exception e)
+            {
+                System.Diagnostics.Debug.WriteLine("ERROR" + e);
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
+            }
+            res = new HttpResponseMessage(HttpStatusCode.OK);
+            res.Content = new StringContent(JsonConvert.SerializeObject(product));
+            res.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            return res;
+        }
+
+        [HttpGet]
         [Route("findByName/{name}")]
         public HttpResponseMessage GetProductByName(string name)
         {
