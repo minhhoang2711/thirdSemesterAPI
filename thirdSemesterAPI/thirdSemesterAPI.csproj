@@ -234,12 +234,16 @@
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
+    <Compile Include="Controllers\OrderDTOController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductDTOController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SendMailController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="CustomModels\ImageResponse.cs" />
     <Compile Include="CustomModels\ProductClientRes.cs" />
+    <Compile Include="DTO\OrderDTO.cs" />
+    <Compile Include="DTO\ProductDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
