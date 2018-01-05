@@ -17,8 +17,8 @@ namespace thirdSemesterAPI.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
-            this.ImageDetails = new HashSet<ImageDetail>();
             this.OrderDetails = new HashSet<OrderDetail>();
+            this.ImageDetails = new HashSet<ImageDetail>();
             this.Colors = new HashSet<Color>();
             this.CategoryProducts = new HashSet<CategoryProduct>();
             this.Suppliers = new HashSet<Supplier>();
@@ -28,7 +28,6 @@ namespace thirdSemesterAPI.Models
         public string Name { get; set; }
         public int SupplierId { get; set; }
         public int CategoryId { get; set; }
-        public int ImageId { get; set; }
         public int ColorId { get; set; }
         public Nullable<System.DateTime> ManufactureDate { get; set; }
         public Nullable<int> Price { get; set; }
@@ -36,9 +35,9 @@ namespace thirdSemesterAPI.Models
         public string Description { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ImageDetail> ImageDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ImageDetail> ImageDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Color> Colors { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

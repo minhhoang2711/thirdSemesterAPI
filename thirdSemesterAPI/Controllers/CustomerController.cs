@@ -214,10 +214,12 @@ namespace thirdSemesterAPI.Controllers
         {
             try
             {
-                if (customerModel.Login(login))
+                if (customerModel.Login(login) != null)
                 {
-                    var respone = login.Email;
-                    return Request.CreateResponse(HttpStatusCode.OK, respone);
+                    var response = new HttpResponseMessage(HttpStatusCode.OK);
+                    response.Content = new StringContent(JsonConvert.SerializeObject(customerModel.Login(login)));
+                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                    return response;
                 }
                 else
                 {

@@ -22,8 +22,6 @@ namespace thirdSemesterAPI.Models
     
         public int Id { get; set; }
         public string NameByColorName { get; set; }
-        public string NameByRGB { get; set; }
-        public string NameByHexadecimal { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }

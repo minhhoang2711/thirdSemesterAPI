@@ -26,14 +26,11 @@ namespace thirdSemesterAPI.Models
         }
     
         public virtual DbSet<CategoryCustomer> CategoryCustomers { get; set; }
-        public virtual DbSet<CategoryImage> CategoryImages { get; set; }
         public virtual DbSet<CategoryProduct> CategoryProducts { get; set; }
         public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Image> Images { get; set; }
-        public virtual DbSet<ImageDetail> ImageDetails { get; set; }
-        public virtual DbSet<News> News { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Product> Products { get; set; }

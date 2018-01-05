@@ -21,10 +21,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price.Value,
-                    SupplierId = p.SupplierId,
-                    CategoryId = p.CategoryId,
-                    ImageId = p.ImageId,
-                    ColorId = p.ColorId,
                     ManufactureDate = p.ManufactureDate.Value,
                     Description = p.Description,
                     Status = p.Status
@@ -45,7 +41,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price.Value,
-                    CategoryId = p.CategoryId,  
                     Description = p.Description,
                 }).ToList();
             }
@@ -65,10 +60,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price.Value,
-                    SupplierId = p.SupplierId,
-                    CategoryId = p.CategoryId,
-                    ImageId = p.ImageId,
-                    ColorId = p.ColorId,
                     ManufactureDate = p.ManufactureDate.Value,
                     Description = p.Description,
                     Status = p.Status
@@ -89,10 +80,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price.Value,
-                    SupplierId = p.SupplierId,
-                    CategoryId = p.CategoryId,
-                    ImageId = p.ImageId,
-                    ColorId = p.ColorId,
                     ManufactureDate = p.ManufactureDate.Value,
                     Description = p.Description,
                     Status = p.Status
@@ -113,7 +100,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price.Value,
-                    CategoryId = p.CategoryId,
                     Description = p.Description,
                 }).Where(p => p.Name == name).ToList();
             }
@@ -132,7 +118,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price.Value,
-                    CategoryId = p.CategoryId,
                     Description = p.Description
                 }).FirstOrDefault(p => p.Id == id);
             }
@@ -151,10 +136,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price.Value,
-                    SupplierId = p.SupplierId,
-                    CategoryId = p.CategoryId,
-                    ImageId = p.ImageId,
-                    ColorId = p.ColorId,
                     ManufactureDate = p.ManufactureDate.Value,
                     Description = p.Description,
                     Status = p.Status
@@ -175,7 +156,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price.Value,
-                    CategoryId = p.CategoryId,
                     Description = p.Description
                 }).ToList();
             }
@@ -194,10 +174,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                     Id = product.Id,
                     Name = product.Name,
                     Price = product.Price,
-                    SupplierId = product.SupplierId,
-                    CategoryId = product.CategoryId,
-                    ImageId = product.ImageId,
-                    ColorId = product.ColorId,
                     ManufactureDate = product.ManufactureDate,
                     Description = product.Description,
                     Status = product.Status
@@ -226,10 +202,6 @@ namespace thirdSemesterAPI.Models.ProductModel
                 var updateProduct = data.Products.Find(id);
                 updateProduct.Name = (product.Name != null) ? product.Name : updateProduct.Name;
                 updateProduct.Price = (product.Price != 0) ? product.Price : updateProduct.Price;
-                updateProduct.SupplierId = (product.SupplierId != 0) ? product.SupplierId : updateProduct.SupplierId;
-                updateProduct.CategoryId = (product.CategoryId != 0) ? product.CategoryId : updateProduct.CategoryId;
-                updateProduct.ImageId = (product.ImageId != 0) ? product.ImageId : updateProduct.ImageId;
-                updateProduct.ColorId = (product.ColorId != 0) ? product.ColorId : updateProduct.ColorId;
                 updateProduct.ManufactureDate = (product.ManufactureDate != null) ? product.ManufactureDate : updateProduct.ManufactureDate;
                 updateProduct.Description = (product.Description != null) ? product.Description : updateProduct.Description;
                 updateProduct.Status = (product.Status != null) ? product.Status : updateProduct.Status;

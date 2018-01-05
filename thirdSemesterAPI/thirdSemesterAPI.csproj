@@ -245,9 +245,6 @@
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryCustomerModel\CategoryCustomerModel.cs" />
-    <Compile Include="Models\CategoryImage.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CategoryImageModel\CategoryImageModel.cs" />
     <Compile Include="Models\CategoryProduct.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
@@ -300,13 +297,7 @@
     <Compile Include="Models\Image.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ImageDetail.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ImageModel\ImageModel.cs" />
-    <Compile Include="Models\News.cs">
-      <DependentUpon>EntityModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\NewsModel\NewsModel.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
@@ -328,12 +319,15 @@
       <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierModel\SupplierModel.cs" />
+    <Compile Include="Need\OrderApiHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\CheckAuthorize.cs" />
+    <Compile Include="Security\Encryption.cs" />
     <Compile Include="Security\MyPrincial.cs" />
     <Compile Include="Security\SessionPersister.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\ProjectAptechIII.bak" />
     <EntityDeploy Include="Models\EntityModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>EntityModel.Designer.cs</LastGenOutput>
@@ -341,7 +335,6 @@
     <Content Include="Models\EntityModel.edmx.diagram">
       <DependentUpon>EntityModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Database\ProjectAptechIII.bak" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Web.Debug.config">
@@ -352,6 +345,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="ApiCall\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>

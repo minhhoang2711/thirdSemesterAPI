@@ -4,20 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ProjectAptechIIIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ProjectAptechIIIModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CategoryCustomer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
-        </EntityType>
-        <EntityType Name="CategoryImage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="CategoryProduct">
           <Key>
@@ -32,8 +25,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="NameByColorName" Type="varchar" MaxLength="150" />
-          <Property Name="NameByRGB" Type="varchar" MaxLength="150" />
-          <Property Name="NameByHexadecimal" Type="varchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="ColorDetails">
           <Key>
@@ -79,23 +70,9 @@
           <Key>
             <PropertyRef Name="ImageId" />
             <PropertyRef Name="ProductId" />
-            <PropertyRef Name="NewsId" />
-            <PropertyRef Name="ImageCategoryId" />
           </Key>
           <Property Name="ImageId" Type="int" Nullable="false" />
           <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="NewsId" Type="int" Nullable="false" />
-          <Property Name="ImageCategoryId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="News">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="150" />
-          <Property Name="ContentNews" Type="text" />
-          <Property Name="ImageId" Type="int" />
-          <Property Name="PostDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -124,10 +101,6 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="150" Nullable="false" />
-          <Property Name="SupplierId" Type="int" Nullable="false" />
-          <Property Name="CategoryId" Type="int" Nullable="false" />
-          <Property Name="ImageId" Type="int" Nullable="false" />
-          <Property Name="ColorId" Type="int" Nullable="false" />
           <Property Name="ManufactureDate" Type="datetime" />
           <Property Name="Price" Type="int" />
           <Property Name="Status" Type="varchar" MaxLength="50" />
@@ -214,18 +187,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ImageDetails_CategoryImage">
-          <End Role="CategoryImage" Type="Self.CategoryImage" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CategoryImage">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="ImageCategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ImageDetails_Image">
           <End Role="Image" Type="Self.Image" Multiplicity="1" />
           <End Role="ImageDetails" Type="Self.ImageDetails" Multiplicity="*" />
@@ -235,18 +196,6 @@
             </Principal>
             <Dependent Role="ImageDetails">
               <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImageDetails_News">
-          <End Role="News" Type="Self.News" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="News">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="NewsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -360,7 +309,6 @@
         </Association>
         <EntityContainer Name="ProjectAptechIIIModelStoreContainer">
           <EntitySet Name="CategoryCustomer" EntityType="Self.CategoryCustomer" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CategoryImage" EntityType="Self.CategoryImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryProduct" EntityType="Self.CategoryProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ColorDetails" EntityType="Self.ColorDetails" Schema="dbo" store:Type="Tables" />
@@ -368,7 +316,6 @@
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Image" EntityType="Self.Image" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImageDetails" EntityType="Self.ImageDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -392,16 +339,8 @@
             <End Role="Role" EntitySet="Role" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_CategoryImage" Association="Self.FK_ImageDetails_CategoryImage">
-            <End Role="CategoryImage" EntitySet="CategoryImage" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_ImageDetails_Image" Association="Self.FK_ImageDetails_Image">
             <End Role="Image" EntitySet="Image" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_News" Association="Self.FK_ImageDetails_News">
-            <End Role="News" EntitySet="News" />
             <End Role="ImageDetails" EntitySet="ImageDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_ImageDetails_Product" Association="Self.FK_ImageDetails_Product">
@@ -441,8 +380,7 @@
             <End Role="SupplierDetails" EntitySet="SupplierDetails" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectAptechIIIModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -453,14 +391,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_CategoryCustomer" FromRole="CategoryCustomer" ToRole="Customer" />
-        </EntityType>
-        <EntityType Name="CategoryImage">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ImageDetails" Relationship="Self.FK_ImageDetails_CategoryImage" FromRole="CategoryImage" ToRole="ImageDetails" />
         </EntityType>
         <EntityType Name="CategoryProduct">
           <Key>
@@ -476,8 +406,6 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NameByColorName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="NameByRGB" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="NameByHexadecimal" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Products" Relationship="Self.ColorDetails" FromRole="Color" ToRole="Product" />
         </EntityType>
         <EntityType Name="Customer">
@@ -515,34 +443,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ImageDetails" Relationship="Self.FK_ImageDetails_Image" FromRole="Image" ToRole="ImageDetails" />
-        </EntityType>
-        <EntityType Name="ImageDetail">
-          <Key>
-            <PropertyRef Name="ImageId" />
-            <PropertyRef Name="ProductId" />
-            <PropertyRef Name="NewsId" />
-            <PropertyRef Name="ImageCategoryId" />
-          </Key>
-          <Property Name="ImageId" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="NewsId" Type="Int32" Nullable="false" />
-          <Property Name="ImageCategoryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="CategoryImage" Relationship="Self.FK_ImageDetails_CategoryImage" FromRole="ImageDetails" ToRole="CategoryImage" />
-          <NavigationProperty Name="Image" Relationship="Self.FK_ImageDetails_Image" FromRole="ImageDetails" ToRole="Image" />
-          <NavigationProperty Name="News" Relationship="Self.FK_ImageDetails_News" FromRole="ImageDetails" ToRole="News" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_ImageDetails_Product" FromRole="ImageDetails" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="News">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="ContentNews" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ImageId" Type="Int32" />
-          <Property Name="PostDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ImageDetails" Relationship="Self.FK_ImageDetails_News" FromRole="News" ToRole="ImageDetails" />
+          <NavigationProperty Name="Products" Relationship="Self.ImageDetails" FromRole="Image" ToRole="Product" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -576,17 +477,13 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SupplierId" Type="Int32" Nullable="false" />
-          <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <Property Name="ImageId" Type="Int32" Nullable="false" />
-          <Property Name="ColorId" Type="Int32" Nullable="false" />
           <Property Name="ManufactureDate" Type="DateTime" Precision="3" />
           <Property Name="Price" Type="Int32" />
           <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="ImageDetails" Relationship="Self.FK_ImageDetails_Product" FromRole="Product" ToRole="ImageDetails" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Product" FromRole="Product" ToRole="OrderDetails" />
           <NavigationProperty Name="Colors" Relationship="Self.ColorDetails" FromRole="Product" ToRole="Color" />
+          <NavigationProperty Name="Images" Relationship="Self.ImageDetails" FromRole="Product" ToRole="Image" />
           <NavigationProperty Name="CategoryProducts" Relationship="Self.ProductDetails" FromRole="Product" ToRole="CategoryProduct" />
           <NavigationProperty Name="Suppliers" Relationship="Self.SupplierDetails" FromRole="Product" ToRole="Suppliers" />
         </EntityType>
@@ -618,18 +515,6 @@
             </Principal>
             <Dependent Role="Customer">
               <PropertyRef Name="CategoryCustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImageDetails_CategoryImage">
-          <End Role="CategoryImage" Type="Self.CategoryImage" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CategoryImage">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="ImageCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -669,42 +554,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ImageDetails_Image">
-          <End Role="Image" Type="Self.Image" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Image">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="ImageId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImageDetails_News">
-          <End Role="News" Type="Self.News" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="News">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="NewsId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImageDetails_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="ImageDetails" Type="Self.ImageDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ImageDetails">
-              <PropertyRef Name="ProductId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OrderDetails_Order">
           <End Role="Order" Type="Self.Order" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
@@ -733,6 +582,10 @@
           <End Role="Color" Type="Self.Color" Multiplicity="*" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
         </Association>
+        <Association Name="ImageDetails">
+          <End Role="Image" Type="Self.Image" Multiplicity="*" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        </Association>
         <Association Name="ProductDetails">
           <End Role="CategoryProduct" Type="Self.CategoryProduct" Multiplicity="*" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -743,14 +596,11 @@
         </Association>
         <EntityContainer Name="ProjectAptechIIIEntities2" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CategoryCustomers" EntityType="Self.CategoryCustomer" />
-          <EntitySet Name="CategoryImages" EntityType="Self.CategoryImage" />
           <EntitySet Name="CategoryProducts" EntityType="Self.CategoryProduct" />
           <EntitySet Name="Colors" EntityType="Self.Color" />
           <EntitySet Name="Customers" EntityType="Self.Customer" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Images" EntityType="Self.Image" />
-          <EntitySet Name="ImageDetails" EntityType="Self.ImageDetail" />
-          <EntitySet Name="News" EntityType="Self.News" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
           <EntitySet Name="Products" EntityType="Self.Product" />
@@ -759,10 +609,6 @@
           <AssociationSet Name="FK_Customer_CategoryCustomer" Association="Self.FK_Customer_CategoryCustomer">
             <End Role="CategoryCustomer" EntitySet="CategoryCustomers" />
             <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_CategoryImage" Association="Self.FK_ImageDetails_CategoryImage">
-            <End Role="CategoryImage" EntitySet="CategoryImages" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
             <End Role="Customer" EntitySet="Customers" />
@@ -776,18 +622,6 @@
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_Image" Association="Self.FK_ImageDetails_Image">
-            <End Role="Image" EntitySet="Images" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_News" Association="Self.FK_ImageDetails_News">
-            <End Role="News" EntitySet="News" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImageDetails_Product" Association="Self.FK_ImageDetails_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="ImageDetails" EntitySet="ImageDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Order" Association="Self.FK_OrderDetails_Order">
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
@@ -798,6 +632,10 @@
           </AssociationSet>
           <AssociationSet Name="ColorDetails" Association="Self.ColorDetails">
             <End Role="Color" EntitySet="Colors" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="ImageDetails" Association="Self.ImageDetails">
+            <End Role="Image" EntitySet="Images" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="ProductDetails" Association="Self.ProductDetails">
@@ -823,14 +661,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CategoryImages">
-            <EntityTypeMapping TypeName="ProjectAptechIIIModel.CategoryImage">
-              <MappingFragment StoreEntitySet="CategoryImage">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CategoryProducts">
             <EntityTypeMapping TypeName="ProjectAptechIIIModel.CategoryProduct">
               <MappingFragment StoreEntitySet="CategoryProduct">
@@ -844,8 +674,6 @@
               <MappingFragment StoreEntitySet="Color">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="NameByColorName" ColumnName="NameByColorName" />
-                <ScalarProperty Name="NameByRGB" ColumnName="NameByRGB" />
-                <ScalarProperty Name="NameByHexadecimal" ColumnName="NameByHexadecimal" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -884,27 +712,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ImageDetails">
-            <EntityTypeMapping TypeName="ProjectAptechIIIModel.ImageDetail">
-              <MappingFragment StoreEntitySet="ImageDetails">
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="NewsId" ColumnName="NewsId" />
-                <ScalarProperty Name="ImageCategoryId" ColumnName="ImageCategoryId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="News">
-            <EntityTypeMapping TypeName="ProjectAptechIIIModel.News">
-              <MappingFragment StoreEntitySet="News">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ContentNews" ColumnName="ContentNews" />
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="PostDate" ColumnName="PostDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="ProjectAptechIIIModel.Order">
               <MappingFragment StoreEntitySet="Order">
@@ -932,10 +739,6 @@
               <MappingFragment StoreEntitySet="Product">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
-                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
-                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
                 <ScalarProperty Name="ManufactureDate" ColumnName="ManufactureDate" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -965,6 +768,14 @@
           <AssociationSetMapping Name="ColorDetails" TypeName="ProjectAptechIIIModel.ColorDetails" StoreEntitySet="ColorDetails">
             <EndProperty Name="Color">
               <ScalarProperty Name="Id" ColumnName="ColorId" />
+            </EndProperty>
+            <EndProperty Name="Product">
+              <ScalarProperty Name="Id" ColumnName="ProductId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ImageDetails" TypeName="ProjectAptechIIIModel.ImageDetails" StoreEntitySet="ImageDetails">
+            <EndProperty Name="Image">
+              <ScalarProperty Name="Id" ColumnName="ImageId" />
             </EndProperty>
             <EndProperty Name="Product">
               <ScalarProperty Name="Id" ColumnName="ProductId" />

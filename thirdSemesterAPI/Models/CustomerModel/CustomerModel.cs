@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 using thirdSemesterAPI.Models.Entity;
+using thirdSemesterAPI.Security;
 
 namespace thirdSemesterAPI.Models.CustomerModel
 {
@@ -139,31 +142,30 @@ namespace thirdSemesterAPI.Models.CustomerModel
             }
         }
 
-        public bool Login(LoginRequest login)
+        public List<CustomerEntity> Login(LoginRequest login)
         {
             try
             {
                 
                 List<CustomerEntity> customers = data.Customers.Select(p => new CustomerEntity()
                 {
-                    Id = p.Id,
                     Email = p.Email,
                     Password = p.Password
-                }).Where(p => p.Email.Contains(login.Email) && p.Password.Contains(login.Password)).ToList();
+                }).Where(p => p.Email.Contains(login.Email) && p.Password.Contains((EncryptionPassword(login.Password)))).ToList();
                 if(customers.Count!= 0)
                 {
                     //session["email"] = login.Email;
                     //session["password"] = login.Password;
-                    return true;
+                    return customers;
                 }
                 else
                 {
-                    return false;
+                    return null;
                 }
             }
             catch
             {
-                return false;
+                return null;
             }
         }
 
@@ -178,6 +180,22 @@ namespace thirdSemesterAPI.Models.CustomerModel
         //    return false;
         //}
 
+        public string EncryptionPassword(String password)
+        {
+            MD5CryptoServiceProvider md5 = new MD5CryptoServiceProvider();
+            byte[] encrypt;
+            UTF8Encoding encode = new UTF8Encoding();
+            //encrypt the given password string into Encrypted data  
+            encrypt = md5.ComputeHash(encode.GetBytes(password));
+            StringBuilder encryptdata = new StringBuilder();
+            //Create a new string by using the encrypted data  
+            for (int i = 0; i < encrypt.Length; i++)
+            {
+                encryptdata.Append(encrypt[i].ToString());
+            }
+            return encryptdata.ToString();
+        }
+
         public bool AddNewCustomer(CustomerEntity p)
         {
             try
@@ -190,7 +208,7 @@ namespace thirdSemesterAPI.Models.CustomerModel
                     Address = p.Address,
                     Email = p.Email,
                     CategoryCustomerId = p.CategoryCustomerId,
-                    Password = p.Password
+                    Password = EncryptionPassword(p.Password)
                 };
                 data.Customers.Add(newCustomer);
                 data.SaveChanges();

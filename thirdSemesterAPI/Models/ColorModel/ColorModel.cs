@@ -19,8 +19,6 @@ namespace thirdSemesterAPI.Models.ColorModel
                 {
                     Id = p.Id,
                     NameByColorName = p.NameByColorName,
-                    NameByRGB = p.NameByRGB,
-                    NameByHexadecimal = p.NameByHexadecimal
                 }).ToList();
             }
             catch (Exception)
@@ -37,9 +35,7 @@ namespace thirdSemesterAPI.Models.ColorModel
                 return data.Colors.Select(p => new ColorEntity()
                 {
                     Id = p.Id,
-                    NameByColorName = p.NameByColorName,
-                    NameByRGB = p.NameByRGB,
-                    NameByHexadecimal = p.NameByHexadecimal
+                    NameByColorName = p.NameByColorName,                   
                 }).FirstOrDefault(p => p.Id == id);
             }
             catch (Exception)
@@ -57,8 +53,6 @@ namespace thirdSemesterAPI.Models.ColorModel
                 {
                     Id = p.Id,
                     NameByColorName = p.NameByColorName,
-                    NameByRGB = p.NameByRGB,
-                    NameByHexadecimal = p.NameByHexadecimal
                 }).Where(p => p.NameByColorName.Contains(name)).ToList();
             }
             catch
@@ -75,8 +69,6 @@ namespace thirdSemesterAPI.Models.ColorModel
                 {
                     Id = p.Id,
                     NameByColorName = p.NameByColorName,
-                    NameByRGB = p.NameByRGB,
-                    NameByHexadecimal = p.NameByHexadecimal
                 };
                 data.Colors.Add(newColor);
                 data.SaveChanges();
@@ -101,8 +93,6 @@ namespace thirdSemesterAPI.Models.ColorModel
             {
                 var updateColor = data.Colors.Find(id);
                 updateColor.NameByColorName = (Color.NameByColorName != null) ? Color.NameByColorName : updateColor.NameByColorName;
-                updateColor.NameByRGB = (Color.NameByRGB != null) ? Color.NameByRGB : updateColor.NameByRGB;
-                updateColor.NameByHexadecimal = (Color.NameByHexadecimal != null) ? Color.NameByHexadecimal : updateColor.NameByHexadecimal;
                 data.SaveChanges();
                 return true;
             }
