@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using thirdSemesterAPI.CustomModels;
 using thirdSemesterAPI.Models.Entity;
 using thirdSemesterAPI.Models.OrderModel;
 
@@ -79,6 +80,27 @@ namespace thirdSemesterAPI.Controllers
             catch
             {
                 return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            }
+        }
+        [HttpPost]
+        [Route("new")]
+        public HttpResponseMessage SubmitOrder(OrderRequest order)
+        {
+            try
+            {
+                int orderId = orderModel.SubmitOrder(order);
+                if (orderId == 0)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "ERROR WHILE SUBMIT");
+                }
+                var responseObj = new
+                {
+                    OrderId= orderId,
+                };
+                return Request.CreateResponse(HttpStatusCode.OK, responseObj);
+            } catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "ERROR WHILE SUBMIT");
             }
         }
     }

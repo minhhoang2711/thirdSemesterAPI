@@ -16,8 +16,9 @@ namespace thirdSemesterAPI.Models
     {
         public int OrderId { get; set; }
         public int ProductId { get; set; }
-        public Nullable<int> UnitPrice { get; set; }
+        public Nullable<decimal> UnitPrice { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public Nullable<decimal> Total { get; set; }
     
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }

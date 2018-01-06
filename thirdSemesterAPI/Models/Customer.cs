@@ -18,6 +18,7 @@ namespace thirdSemesterAPI.Models
         public Customer()
         {
             this.Orders = new HashSet<Order>();
+            this.Addresses = new HashSet<Address>();
         }
     
         public int Id { get; set; }
@@ -31,5 +32,7 @@ namespace thirdSemesterAPI.Models
         public virtual CategoryCustomer CategoryCustomer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Orders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

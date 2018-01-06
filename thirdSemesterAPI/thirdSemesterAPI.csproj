@@ -240,9 +240,13 @@
     <Compile Include="Controllers\SendMailController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="CustomModels\ImageResponse.cs" />
+    <Compile Include="CustomModels\OrderRequest.cs" />
     <Compile Include="CustomModels\ProductClientRes.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Address.cs">
+      <DependentUpon>EntityModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CategoryCustomer.cs">
       <DependentUpon>EntityModel.tt</DependentUpon>
