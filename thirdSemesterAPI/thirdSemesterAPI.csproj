@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net, Version=0.1.5073.29922, Culture=neutral, PublicKeyToken=6bcd409ee6bc9292, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="DevOne.Security.Cryptography.BCrypt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.1.0.0.0\lib\DevOne.Security.Cryptography.BCrypt.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -205,6 +211,7 @@
     <Content Include="Content\Images\Hung2.jpg" />
     <Content Include="Content\Images\Hung4.jpg" />
     <Content Include="Global.asax" />
+    <Content Include="LICENSE.txt" />
     <Content Include="Models\EntityModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EntityModel.edmx</DependentUpon>
@@ -240,6 +247,7 @@
     <Compile Include="Controllers\SendMailController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="CustomModels\ImageResponse.cs" />
+    <Compile Include="CustomModels\LoginResponse.cs" />
     <Compile Include="CustomModels\OrderRequest.cs" />
     <Compile Include="CustomModels\ProductClientRes.cs" />
     <Compile Include="Global.asax.cs">

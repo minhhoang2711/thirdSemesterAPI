@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using thirdSemesterAPI.CustomModels;
 using thirdSemesterAPI.Models.Entity;
 
 namespace thirdSemesterAPI.Models.CustomerModel
@@ -139,7 +140,7 @@ namespace thirdSemesterAPI.Models.CustomerModel
             }
         }
 
-        public bool Login(LoginRequest login)
+        public LoginResponse Login(LoginRequest login)
         {
             try
             {
@@ -148,22 +149,27 @@ namespace thirdSemesterAPI.Models.CustomerModel
                 {
                     Id = p.Id,
                     Email = p.Email,
-                    Password = p.Password
-                }).Where(p => p.Email.Contains(login.Email) && p.Password.Contains(login.Password)).ToList();
-                if(customers.Count!= 0)
+                    Password = p.Password,
+                    AddressId = p.Addresses.FirstOrDefault().Id,
+                }).Where(p => p.Email.Equals(login.Email)).ToList();
+                if (customers.Count() == 0) { return null; }
+                if (BCrypt.Net.BCrypt.Verify(login.Password, customers[0].Password))
                 {
-                    //session["email"] = login.Email;
-                    //session["password"] = login.Password;
-                    return true;
-                }
-                else
+                    return new LoginResponse
+                    {
+                        UserId = customers[0].Id,
+                        AddressId = customers[0].AddressId
+                    };
+                } else
                 {
-                    return false;
+                    return null;
                 }
+                    
+
             }
             catch
             {
-                return false;
+                return null;
             }
         }
 
@@ -182,15 +188,15 @@ namespace thirdSemesterAPI.Models.CustomerModel
         {
             try
             {
+                var encryptPw = BCrypt.Net.BCrypt.HashPassword(p.Password);
                 var newCustomer = new Customer()
                 {
-                    Id = p.Id,
                     Name = p.Name,
                     Phone = p.Phone,
                     Address = p.Address,
                     Email = p.Email,
                     CategoryCustomerId = p.CategoryCustomerId,
-                    Password = p.Password
+                    Password = encryptPw
                 };
                 data.Customers.Add(newCustomer);
                 data.SaveChanges();
@@ -203,8 +209,9 @@ namespace thirdSemesterAPI.Models.CustomerModel
                     return false;
                 }
             }
-            catch
+            catch (Exception e)
             {
+                System.Diagnostics.Debug.WriteLine("EXCEPTION: " + e);
                 return false;
             }
         }

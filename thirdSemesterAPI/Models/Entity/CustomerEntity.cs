@@ -14,5 +14,6 @@ namespace thirdSemesterAPI.Models.Entity
         public string Email { get; set; }
         public int CategoryCustomerId { get; set; }
         public string Password { get; set; }
+        public int AddressId { get; set; }
     }
 }

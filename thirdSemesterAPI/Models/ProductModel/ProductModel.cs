@@ -238,38 +238,52 @@ namespace thirdSemesterAPI.Models.ProductModel
             }
         }
 
-        public bool AddNewProduct(ProductEntity product)
+        public int AddNewProduct(ProductEntity product)
         {
-            try
+            using (var transaction = data.Database.BeginTransaction())
             {
-                var newProduct = new Product()
+                try
                 {
-                    Id = product.Id,
-                    Name = product.Name,
-                    Price = product.Price,
-                    SupplierId = product.SupplierId,
-                    CategoryId = product.CategoryId,
-                    ImageId = product.ImageId,
-                    ColorId = product.ColorId,
-                    ManufactureDate = product.ManufactureDate,
-                    Description = product.Description,
-                    Status = product.Status
-                };
-                data.Products.Add(newProduct);
-                data.SaveChanges();
-                if (newProduct.Id != 0)
-                {
-                    return true;
+                    var newProduct = new Product()
+                    {
+                        Id = product.Id,
+                        Name = product.Name,
+                        Price = product.Price,
+                        SupplierId = product.SupplierId,
+                        CategoryId = product.CategoryId,
+                        ColorId = product.ColorId,
+                        ManufactureDate = DateTime.Now,
+                        Description = product.Description,
+                        Status = product.Status
+                    };
+                    data.Products.Add(newProduct);
+                    data.SaveChanges();
+
+
+                    var imageDetails = new ImageDetail
+                    {
+                        ImageId = product.ImageId,
+                        ProductId = product.Id,
+                    };
+
+                    data.ImageDetails.Add(imageDetails);
+                    data.SaveChanges();
+                    if (newProduct.Id != 0)
+                    {
+                        return newProduct.Id;
+                    }
+                    else
+                    {
+                        return 0;
+                    }
                 }
-                else
+                catch (Exception e)
                 {
-                    return false;
+                    transaction.Rollback();
+                    return 0;
                 }
             }
-            catch
-            {
-                return false;
-            }
+                
         }
 
         public bool UpdateProductById(int id, ProductEntity product)

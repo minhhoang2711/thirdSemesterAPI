@@ -21,7 +21,6 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    EmployDate = p.EmployDate.Value,
                     Phone = p.Phone,
                     Email = p.Email,
                     Address = p.Address,
@@ -43,7 +42,6 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    EmployDate = p.EmployDate.Value,
                     Phone = p.Phone,
                     Email = p.Email,
                     Address = p.Address,
@@ -64,7 +62,6 @@ namespace thirdSemesterAPI.Models.EmployeeModel
                 {
                     Id = p.Id,
                     Name = p.Name,
-                    EmployDate = p.EmployDate.Value,
                     Phone = p.Phone,
                     Email = p.Email,
                     Address = p.Address,
@@ -80,15 +77,15 @@ namespace thirdSemesterAPI.Models.EmployeeModel
         {
             try
             {
+                var encryptedPw = BCrypt.Net.BCrypt.HashPassword(p.Password);
                 var newEmployee = new Employee()
                 {
-                    Id = p.Id,
                     Name = p.Name,
-                    EmployDate = p.EmployDate,
+                    EmployDate = DateTime.Now,
                     Phone = p.Phone,
                     Email = p.Email,
                     Address = p.Address,
-                    Password = p.Password
+                    Password = encryptedPw
                 };
                 data.Employees.Add(newEmployee);
                 data.SaveChanges();
@@ -113,7 +110,6 @@ namespace thirdSemesterAPI.Models.EmployeeModel
             {
                 var updateEmployee = data.Employees.Find(id);
                 updateEmployee.Name = (employee.Name != null) ? employee.Name : updateEmployee.Name;
-                updateEmployee.EmployDate = (employee.EmployDate != null) ? employee.EmployDate : updateEmployee.EmployDate;
                 updateEmployee.Phone = (employee.Phone != null) ? employee.Phone : updateEmployee.Phone;
                 updateEmployee.Email = (employee.Email != null) ? employee.Email : updateEmployee.Email;
                 updateEmployee.Address = (employee.Address != null) ? employee.Address : updateEmployee.Address;
@@ -142,36 +138,31 @@ namespace thirdSemesterAPI.Models.EmployeeModel
             }
 
         }
-        public bool Login(LoginRequest login)
+        public int Login(LoginRequest login)
         {
             try
             {
-
+                var encryptedPw = BCrypt.Net.BCrypt.HashPassword(login.Password);
                 List<EmployeeEntity> employees = data.Employees.Select(p => new EmployeeEntity()
                 {
                     Id = p.Id,
                     Email = p.Email,
                     Password = p.Password
                     
-                }).Where(p => p.Email.Contains(login.Email) && p.Password.Contains(login.Password)).ToList();
-                //SessionPersister.Email = employees.Select(p => new EmployeeEntity()
-                //{   
-                //    Email = p.Email                    
-                //}).ToString();
-                if (employees.Count != 0)
+                }).Where(p => p.Email.Equals(login.Email)).ToList();
+                if (BCrypt.Net.BCrypt.Verify(login.Password, employees[0].Password))
                 {
-                    //session["email"] = login.Email;
-                    //session["password"] = login.Password;
-                    return true;
+                    return employees[0].Id;
                 }
                 else
                 {
-                    return false;
+                    return 0;
                 }
             }
-            catch
+            catch (Exception e)
             {
-                return false;
+                System.Diagnostics.Debug.WriteLine("ERROR " + e);
+                return 0;
             }
         }
     }

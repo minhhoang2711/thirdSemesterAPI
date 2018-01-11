@@ -239,11 +239,13 @@ namespace thirdSemesterAPI.Controllers
         {
             try
             {
-                if (productModel.AddNewProduct(productEntity))
+                int productId = productModel.AddNewProduct(productEntity);
+                if (productId != 0)
                 {
                     var respone = new
                     {
-                        createdAt = DateTime.Now
+                        createdAt = DateTime.Now,
+                        ProductId = productId
                     };
                     return Request.CreateResponse(HttpStatusCode.OK, respone);
                 }

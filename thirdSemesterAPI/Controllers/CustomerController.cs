@@ -209,19 +209,23 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("auth")]
         public HttpResponseMessage Login(LoginRequest login)
         {
             try
             {
-                if (customerModel.Login(login))
+                var customer = customerModel.Login(login);
+                if (customer != null)
                 {
-                    var respone = login.Email;
-                    return Request.CreateResponse(HttpStatusCode.OK, respone);
+                    return Request.CreateResponse(HttpStatusCode.OK, new {
+                        UserId = customer.UserId,
+                        AddressId = customer.AddressId,
+                    });
                 }
                 else
                 {
-                    return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
+                    return Request.CreateResponse(HttpStatusCode.NotAcceptable, new {
+                    ErrMessage = "UNKNOWN ERROR" });
                 }
             }
             catch

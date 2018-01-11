@@ -84,7 +84,7 @@ namespace thirdSemesterAPI.Controllers
         }
 
         [HttpPost]
-        [Route("addemployee")]
+        [Route("new")]
         public HttpResponseMessage AddNewEmployee(EmployeeEntity employeeEntity)
         {
             try
@@ -164,23 +164,25 @@ namespace thirdSemesterAPI.Controllers
         {
             try
             {
-                if (employeeModel.Login(login))
+                int id = employeeModel.Login(login);
+                if (id != 0)
                 {
                     var respone = new
                     {
                         login = DateTime.Now,
+                        Id = id
 
                     };
                     return Request.CreateResponse(HttpStatusCode.OK, respone);
                 }
                 else
                 {
-                    return new HttpResponseMessage(HttpStatusCode.NotAcceptable);
+                    return new HttpResponseMessage(HttpStatusCode.BadRequest);
                 }
             }
             catch
             {
-                return new HttpResponseMessage(HttpStatusCode.BadRequest);
+                return new HttpResponseMessage(HttpStatusCode.InternalServerError);
             }
 
         }
